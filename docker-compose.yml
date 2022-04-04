@@ -11,6 +11,6 @@ services:
     depends_on:
       - redis
   redis:
-    image: redis:5
+    image: redis:6
     ports: 
       - 6379:6379

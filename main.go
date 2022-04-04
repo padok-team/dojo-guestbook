@@ -19,8 +19,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
+	"github.com/urfave/negroni"
 	"github.com/xyproto/simpleredis"
 )
 
@@ -62,6 +62,15 @@ func EnvHandler(rw http.ResponseWriter, req *http.Request) {
 	rw.Write(envJSON)
 }
 
+func HealthHandler(rw http.ResponseWriter, req *http.Request) {
+	if err := masterPool.Ping(); err != nil {
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte(err.Error()))
+	} else {
+		rw.WriteHeader(http.StatusOK)
+	}
+}
+
 func HandleError(result interface{}, err error) (r interface{}) {
 	if err != nil {
 		panic(err)
@@ -70,7 +79,7 @@ func HandleError(result interface{}, err error) (r interface{}) {
 }
 
 func main() {
-	masterPool = simpleredis.NewConnectionPoolHost(os.Getenv("REDIS_HOST")+":6379")
+	masterPool = simpleredis.NewConnectionPoolHost(os.Getenv("REDIS_HOST") + ":6379")
 	defer masterPool.Close()
 
 	r := mux.NewRouter()
@@ -78,6 +87,7 @@ func main() {
 	r.Path("/rpush/{key}/{value}").Methods("GET").HandlerFunc(ListPushHandler)
 	r.Path("/info").Methods("GET").HandlerFunc(InfoHandler)
 	r.Path("/env").Methods("GET").HandlerFunc(EnvHandler)
+	r.Path("/healthz").Methods("GET").HandlerFunc(HealthHandler)
 
 	n := negroni.Classic()
 	n.UseHandler(r)

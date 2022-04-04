@@ -17,8 +17,9 @@ $(document).ready(function() {
       e.preventDefault();
       var entryValue = entryContentElement.val()
       if (entryValue.length > 0) {
-        entriesElement.append("<p>...</p>");
+        entriesElement.append(`<p>⌛</p>`);
         $.getJSON("rpush/guestbook/" + entryValue, appendGuestbookEntries);
+        entryContentElement.val(''); // cleanup entry
       }
       return false;
     }
