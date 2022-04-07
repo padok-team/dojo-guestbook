@@ -14,3 +14,7 @@ services:
     image: redis:6
     ports: 
       - 6379:6379
+    volumes:
+      - redis-data:/data
+volumes:
+  redis-data: {}
