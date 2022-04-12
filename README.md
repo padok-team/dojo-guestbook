@@ -547,13 +547,13 @@ You can find the complete solution [here](https://github.com/padok-team/dojo-gue
 
 ### Why
 
-Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** is already setup for your and all the traffic for
+Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** and its DNS are already setup for you:
 
 - locally, with Kind, all traffic for `*.vcap.me` goes to your cluster
 
 - on GCP, `*.viarezo-padok.k8s-training.padok.cloud` is sent to the cluster
 
-However, you need to tell the Ingress Controller where to route the request it receives, depending on its _hostname_ or _path_. That is the job of the **Ingress**: define a route to the service you deployed before.
+However, you need to tell the Ingress Controller where to route the request it receives, depending on its _hostname_ or _path_. That is the job of the **Ingress**: it defines a route to the service you deployed before.
 
 ### What
 
