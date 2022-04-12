@@ -280,7 +280,7 @@ services:
 
 ### Why
 
-If you test your app, you can se a big **⚠️ No database connection... ⚠️**. Furthermore, when you try to add something to the guestbook, it hangs (⌛) without saving it (try to refresh the page).
+If you test your app, you can see a big **⚠️ No database connection... ⚠️**. Furthermore, when you try to add something to the guestbook, it hangs (⌛) without saving it (try to refresh the page).
 
 The application is actually stateless, and needs a Redis backend to save its state. To avoid interfering with your local installation, we will run it in container, using once again `docker` and `docker-compose`.
 
@@ -295,16 +295,16 @@ We simply need to add a new service in our docker-compose file, and have a way f
 3. Make the guestbook app use it:
 
    The Guestbook app uses _environment variable_ for its configuration. Here you need to setup the `REDIS_HOST` variable to the hostname of your redis cluster. In a docker-compose environment, each service can be called with its name.
-4. Try to run it: does the application store the state
+4. Try to run it: does the application store the state?
 5. (Optional) Make it persistent!
    
-   Currently, if you save some sentences in the app, but then you run `docker-compose down` and `docker-compose up` again, you'll see that you will loose all your data! 😢
+   Currently, if you save some sentences in the app, then run `docker-compose down` and `docker-compose up` again, you'll see that you will loose all your data! 😢
 
    You can manage volumes in docker-compose, which are persisted, and mount these volumes in your app. If you prefer, you can also link a local folder to a container, it can be useful for live reloading.
 
 ### Check
 
-- [ ] The application actually save messages
+- [ ] The application actually saves messages
 
    ![Local guestbook with DB](./.assets/local-guestbook-with-db.png)
   
@@ -361,11 +361,11 @@ Take some time to [learn a bit about pods](https://kubernetes.io/docs/concepts/w
 
 ### How
 
-1. Well write a `pod.yaml` file (the VSCode extension can help you with that)
+1. Write a `pod.yaml` file (the VSCode extension can help you with that)
 2. At minimum, you need a name and a first container definition, with its name and image. **For the image, you can push the image to a public registry, or for kind add it to the cluster with `kind load docker-image "${IMAGE}" --name padok-training`. You can also use the following: `dixneuf19/guestbook:v0.1.0`.
 3. Try to deploy it, and launch the previous command
 4. If you need to delete it, use `kubectl delete -f manifests/`
-5. Take some time to play around with this object: what does probes do? What happens if you give a non existing image?
+5. Take some time to play around with this object: what happens if you give a non existing image?
 6. Try to access your application with `kubectl port-forward 3000:3000 <my-pod>`
 
 ### Checks
@@ -403,7 +403,7 @@ spec:
 
 One pod is cool, but what if you want to deploy several instances of the same app, to avoid any downtime if a node fails?
 
-That is one the function of deployments: you declare a _template of a Pod_, with also a replication. It also helps you managed updates of your applications without any downtime.
+That is the function of deployments: you declare a _template of a Pod_, with also a replication. It also helps you manage updates of your applications without any downtime.
 
 ### What
 
