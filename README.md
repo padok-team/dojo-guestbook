@@ -1,6 +1,6 @@
 # GuestBook Kubernetes Dojo
 
-Welcome to this Kubernetes Dojo! 
+Welcome to this Kubernetes Dojo!
 Your goal is to deploy a simple web application in a Kubernetes cluster, and learn the maximum during this session.
 
 That's why it is essential that:
@@ -24,24 +24,29 @@ git clone https://github.com/padok-team/dojo-guestbook.git
 cd dojo-guestbook
 ```
 
-### Tooling
+### Connect to a distant VM
+
+To work efficiently, you will work on a distant VM on which all the following tools are already installed.
 
 - `git`: Version your code and collaborate
 - [`docker`](https://docs.docker.com/get-docker/): Build and run container images
 - [`docker-compose`](https://docs.docker.com/compose/install/#install-compose): Run multiple containers locally
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl): The CLI to interact with Kubernetes
 - [`helm`](https://helm.sh/docs/intro/install/): Generate Kubernetes manifest from templates and manage their deployment
-- One of:
-    - [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/#installation): Create a Kubernetes locally inside containers. Only if you have >= 8Go of RAM.
-    - [`gcloud`](https://cloud.google.com/sdk/docs/install): Manage your GCP resources
+- [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/#installation): Create a Kubernetes locally inside containers
 
-If you have any issue while installing one of these tools, ask immediately for help!
+To connect to the VM:
 
-### Setup a Kubernetes cluster
+- Install VSCode
+- Add the following [Remote SSH extension](https://code.visualstudio.com/docs/remote/ssh) to VSCode
 
-#### Kind
+- Create a github account
+- Create a SSH key on your Github account: [Add a ssh key documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+- Share your handle Github with Padok's team member
 
-> Only if you have >= 8G of RAM in your computer
+- Launch a "Remote SSH Session" with VSCode extension via the command `ssh cs@<handleGithub>.aws.padok.cloud`
+
+### Setup a Kubernetes cluster on your VM
 
 We have a script ready for you, it uses the `kind-cluster.yaml` config in this repo for the cluster configuration. If you need more nodes, you'll need to modify it.
 
@@ -75,31 +80,6 @@ curl guestbook.vcap.me
 <hr><center>nginx</center>
 </body>
 </html>
-```
-
-#### GKE Cluster
-
-If your PC is not powerful enough, you can use a shared GKE cluster. For this, you need to use the `gcloud` CLI.
-
-Ask your teacher for a ServiceAccount credentials, which you will use to connect to the cluster.
-
-```bash
-gcloud auth activate-service-account --key-file ./padok-lab-6f00331293c5.json
-gcloud container clusters get-credentials k8s-cluster-viarezo-padok --project padok-lab --region europe-west1
-```
-
-Now you should be able to see some pods:
-
-```bash
-kubectl get pods -A
-```
-
-It is not over! Since this cluster is shared, you need to create your own _namespace_, with the name of your choice:
-
-```bash
-kubectl create namespace <my-namespace>
-# Switch to the namespace
-kubectl config set-context --current --namespace <my-namespace>
 ```
 
 ### Checks (before you go on)
@@ -547,11 +527,8 @@ You can find the complete solution [here](https://github.com/padok-team/dojo-gue
 
 ### Why
 
-Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** and its DNS are already setup for you:
+Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** and its DNS are already setup for you, all traffic for `*.vcap.me` goes to your cluster
 
-- locally, with Kind, all traffic for `*.vcap.me` goes to your cluster
-
-- on GCP, `*.viarezo-padok.k8s-training.padok.cloud` is sent to the cluster
 
 However, you need to tell the Ingress Controller where to route the request it receives, depending on its _hostname_ or _path_. That is the job of the **Ingress**: it defines a route to the service you deployed before.
 
@@ -585,9 +562,7 @@ Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-n
 ```bash
 kubectl get ingress
 kubectl describe ingress <my-ingress>
-# visit https://guestbook.vcap.me/ 
-# or on GKE
-# https://viarezo-padok.k8s-training.padok.cloud/my-name or http://my-name.viarezo-padok.k8s-training.padok.cloud
+# visit https://guestbook.vcap.me/
 ```
 
 ### How
