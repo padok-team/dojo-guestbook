@@ -118,8 +118,7 @@ When you are happy with the result, you can launch the app with `go run main.go`
 
 While you build and iterate on your app locally, you need to be able to deploy it on a real production environment.
 
-Since you don't know where it will run (isolated virtual machine, which packages are installed), we want to ensure the reproductability 
-and isolation of the application. That's why containers, that `docker` helps build and run, are made for!
+Since you don't know where it will run (isolated virtual machine, which packages are installed), we want to ensure the reproductability and isolation of the application. That's why containers, that `docker` helps build and run, are made for!
 
 It is a standard API to build and ship applications across diverse workloads. Whatever the server it is running on, you _image_ should always construct the same isolated environment.
 
@@ -528,7 +527,6 @@ You can find the complete solution [here](https://github.com/padok-team/dojo-gue
 ### Why
 
 Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** and its DNS are already setup for you, all traffic for `*.vcap.me` goes to your cluster
-
 
 However, you need to tell the Ingress Controller where to route the request it receives, depending on its _hostname_ or _path_. That is the job of the **Ingress**: it defines a route to the service you deployed before.
 
