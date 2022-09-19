@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  guestbook:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6
+    ports: 
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data: {}
