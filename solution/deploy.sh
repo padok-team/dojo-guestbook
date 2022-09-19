@@ -21,10 +21,9 @@ _info "📥 Loading guestbook image to kind cluster..."
 kind load docker-image --name=$CLUSTER_NAME guestbook:v0.1.0
 
 _info "📥 Deploying redis..."
-helm upgrade --install redis redis \
-             --repo https://charts.bitnami.com/bitnami \
-             --set architecture=standalone \
-             --set auth.enabled=false
+helm upgrade redis redis \
+            --install \
+            --values=helm/values/redis.yaml
 
 _info "📥 Deploying guestbook..."
 kubectl apply -f manifests/
