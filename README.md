@@ -9,10 +9,6 @@ That's why it is essential that:
 - But also keep focus on your goal: have a working application, piece by piece. Don't block at the start for a detail.
 - To keep moving or learn more, please _andon_! It means then whenever you have a question, a doubt, a feedback, call someone from the staff, we'll love to help you.
 
-
-[TOC]
-
-
 ## 0. Setup your env
 
 First, you need to setup your computer for the dojo.
@@ -753,3 +749,10 @@ docker ps --quiet --all | xargs docker rm
 ```
 
 I hope you had fun and learned something!
+
+## LICENSE
+
+© 2022 [Padok](https://www.padok.fr/).
+
+Licensed under the [Apache License](https://www.apache.org/licenses/LICENSE-2.0), Version 2.0 ([LICENSE](./LICENSE))
+
