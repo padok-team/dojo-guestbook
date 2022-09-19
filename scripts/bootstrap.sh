@@ -20,7 +20,7 @@ if kind get clusters | grep "$CLUSTER_NAME"; then
     exit 0
 else
     _info "🔧 Creating a local Kubernetes cluster..."
-    kind create cluster --name=padok-training --config=../kind-cluster.yaml
+    kind create cluster --name=$CLUSTER_NAME --config=../kind-cluster.yaml
 fi
 
 # Install the NGINX ingress controller.
