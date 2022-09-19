@@ -196,7 +196,7 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
 
-You can find the complete solution [here](https://github.com/padok-team/dojo-guestbook/blob/feat/solution/Dockerfile). Don't spoil yourself too much!
+You can find the complete solution [here](solution/Dockerfile). Don't spoil yourself too much!
 
 </details>
 
@@ -288,7 +288,7 @@ We simply need to add a new service in our docker-compose file, and have a way f
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
 
-You can find the complete solution [here](https://github.com/padok-team/dojo-guestbook/blob/feat/solution/docker-compose.yml). Don't spoil yourself too much!
+You can find the complete solution [here](solution/docker-compose.yaml). Don't spoil yourself too much!
 
 </details>
 
@@ -514,7 +514,7 @@ kubectl port forward svc/<my-svc> 3000:80
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
 
-You can find the complete solution [here](https://github.com/padok-team/dojo-guestbook/blob/feat/solution/manifests/service.yaml). Don't spoil yourself too much!
+You can find the complete solution [here](solution/manifests/service.yaml). Don't spoil yourself too much!
 
 </details>
 
@@ -572,7 +572,7 @@ kubectl describe ingress <my-ingress>
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
 
-You can find the complete solution [here](https://github.com/padok-team/dojo-guestbook/blob/feat/solution/manifests/ingress.yaml). Don't spoil yourself too much!
+You can find the complete solution [here](solution/manifests/ingress.yaml). Don't spoil yourself too much!
 
 </details>
 
@@ -716,7 +716,7 @@ Once it is set correctly, your app should be _Ready_ and you could access it fro
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
 
-You can find the complete solution [here](https://github.com/padok-team/dojo-guestbook/blob/feat/solution/manifests/deployment.yaml). Don't spoil yourself too much!
+You can find the complete solution [here](solution/manifests/deployment.yaml). Don't spoil yourself too much!
 
 </details>
 
