@@ -21,7 +21,9 @@ _info "📥 Loading guestbook image to kind cluster..."
 kind load docker-image --name=$CLUSTER_NAME guestbook:v0.1.0
 
 _info "📥 Deploying redis..."
-helm upgrade redis redis \
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm upgrade redis bitnami/redis \
+            --wait \
             --install \
             --values=helm/values/redis.yaml
 
