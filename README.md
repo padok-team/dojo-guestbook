@@ -166,7 +166,7 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
    ```
 
 7. Check that the microservice responds to requests on
-   http://localhost:3000. You should see the following UI:
+   http://<handleGithub>.aws.padok.cloud:3000. You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
@@ -230,7 +230,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 ### Checks
 
 - [ ] I can launch locally the application with `docker-compose up`
-- [ ] I can see the UI in my brower at `http://localhost:3000`
+- [ ] I can see the UI in my brower at `http://<handleGithub>.aws.padok.cloud:3000`
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -497,7 +497,7 @@ Here is the [official documentation](https://kubernetes.io/docs/concepts/service
 kubectl get services
 kubectl describe service <my-svc>
 kubectl port forward svc/<my-svc> 3000:80
-# lets see on http://localhost:3000
+# lets see on http://<handleGithub>.aws.padok.cloud:3000
 ```
 
 ### How
