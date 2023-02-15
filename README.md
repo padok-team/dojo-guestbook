@@ -40,7 +40,7 @@ To connect to the VM:
 - Create a SSH key on your Github account: [Add a ssh key documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 - Share your handle Github with Padok's team member
 
-- Launch a "Remote SSH Session" with VSCode extension via the command `ssh cs@<handleGithub>.aws.padok.cloud`
+- Launch a "Remote SSH Session" with VSCode extension via the command `ssh <handleGithub>@<handleGithub>.aws.padok.cloud`
 
 ### Setup a Kubernetes cluster on your VM
 
@@ -68,7 +68,7 @@ No resources found in default namespace.
 To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind.
 
 ```bash
-curl guestbook.vcap.me
+curl guestbook.lvh.me
 <html>
 <head><title>404 Not Found</title></head>
 <body>
@@ -114,9 +114,9 @@ When you are happy with the result, you can launch the app with `go run main.go`
 
 While you build and iterate on your app locally, you need to be able to deploy it on a real production environment.
 
-Since you don't know where it will run (isolated virtual machine, which packages are installed), we want to ensure the reproductability and isolation of the application. That's why containers, that `docker` helps build and run, are made for!
+Since you don't know where it will run (in an isolated virtual machine?, which packages are installed?), we want to ensure the reproductability and isolation of the application. That's why containers, that `docker` helps build and run, are made for!
 
-It is a standard API to build and ship applications across diverse workloads. Whatever the server it is running on, you _image_ should always construct the same isolated environment.
+It is a standard API to build and ship applications across diverse workloads. Whatever the server it is running on, your _image_ should always construct the same isolated environment.
 
 Moreover, it is way less expensive in resources (CPU, RAM) than a Virtual Machine, which acheives an isolation by reinstalling a whole OS.
 
@@ -146,7 +146,7 @@ It serves some static files (stored in `/public`), for the UI. You will mainly a
 
 You can follow such [a tutorial](https://docs.docker.com/language/golang/build-images/)
 
-1. Write a `Dockerfile`. You need to start from a _base _image_, ideally with golang already install.
+1. Write a `Dockerfile`. You need to start from a _base _image_, ideally with golang already installed.
 2. In the `Dockerfile`, download the microservice's dependencies. Since latest golang version, we only need `go.mod` and `go.sum` for this task.
 3. In the `Dockerfile`, build the microservice. You need the command `go build` for this.
 4. In the `Dockerfile`, add the `public` folder inside the container, in the same `public` folder.
@@ -157,9 +157,9 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
 
 4. When the container starts, run the microservice.
 5. Build a container image: `docker build -t guestbook:v0.1.0 .`
-6. Run the container. 
+6. Run the container.
 
-   You need to _expose_ the port of your application, which run on `3000`. For this, you just need to add the `--publish <external-port>:<internal-port>` to the `docker run` command.
+   You need to _expose_ the port of your application, which run on `3000`. For this, you need to add the `--publish <external-port>:<internal-port>` to the `docker run` command.
 
    ```bash
    docker run --publish 3000:3000 guestbook:v0.1.0
@@ -179,11 +179,11 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
     1. Check to see how big your container image is.
     2. Change the `go build` command to make the binary statically linked (if you
     don't know what that means, just ask!).
-    3. In your `Dockerfile`, create a second stage that starts from `scratch`.
-    4. Copy the binary from the first stage to the second.
-    5. In the second stage, run the microservice.
-    6. Build your container image again.
-    7. Check to see how big the image is now.
+    1. In your `Dockerfile`, create a second stage that starts from `scratch`.
+    2. Copy the binary from the first stage to the second.
+    3. In the second stage, run the microservice.
+    4. Build your container image again.
+    5. Check to see how big the image is now.
 
 
 
@@ -217,7 +217,7 @@ The `docker-compose.yaml` file will contains everything needed:
 - how to build the image
 - how to run the container, including configuration of port
 - how to link it to another container
-- how to persistent storage
+- how to persist a storage
 
 ### How
 
@@ -265,14 +265,14 @@ We simply need to add a new service in our docker-compose file, and have a way f
 
 ### How
 
-1. Add a `redis` service in your app. Don't build redis locally, but use the public `redis:6` image.
+1. Add a `redis` service in your app. Don't build redis locally, but use the public `redis:7` image.
 2. Expose its redis port `6379`.
 3. Make the guestbook app use it:
 
    The Guestbook app uses _environment variable_ for its configuration. Here you need to setup the `REDIS_HOST` variable to the hostname of your redis cluster. In a docker-compose environment, each service can be called with its name.
 4. Try to run it: does the application store the state?
 5. (Optional) Make it persistent!
-   
+
    Currently, if you save some sentences in the app, then run `docker-compose down` and `docker-compose up` again, you'll see that you will loose all your data! 😢
 
    You can manage volumes in docker-compose, which are persisted, and mount these volumes in your app. If you prefer, you can also link a local folder to a container, it can be useful for live reloading.
@@ -282,7 +282,7 @@ We simply need to add a new service in our docker-compose file, and have a way f
 - [ ] The application actually saves messages
 
    ![Local guestbook with DB](./.assets/local-guestbook-with-db.png)
-  
+
 - [ ] (Optional) If you run `docker-compose down`, you don't loose data when you relaunch the app.
 
 <details>
@@ -292,7 +292,7 @@ You can find the complete solution [here](solution/docker-compose.yaml). Don't s
 
 </details>
 
-## 5. Deploy you app on Kubernetes: the Pod
+## 5. Deploy your app on Kubernetes: the Pod
 
 > If you are here, ask for a quick formation on Kubernetes. We will make a quick overview for everyone!
 
@@ -337,7 +337,7 @@ Take some time to [learn a bit about pods](https://kubernetes.io/docs/concepts/w
 ### How
 
 1. Write a `pod.yaml` file (the VSCode extension can help you with that)
-2. At minimum, you need a name and a first container definition, with its name and image. **For the image, you can push the image to a public registry, or for kind add it to the cluster with `kind load docker-image "${IMAGE}" --name padok-training`. You can also use the following: `dixneuf19/guestbook:v0.1.0`.
+2. At minimum, you need a name and a first container definition, with its name and image. For the image, you can push the image to a public registry, or for *kind* add it to the cluster with `kind load docker-image "${IMAGE}" --name padok-training`. You can also use the following: `dixneuf19/guestbook:v0.1.0`.
 3. Try to deploy it, and launch the previous command
 4. If you need to delete it, use `kubectl delete -f manifests/`
 5. Take some time to play around with this object: what happens if you give a non existing image?
@@ -414,7 +414,7 @@ kubectl describe deployment <my-dep>
 
 ### How
 
-1. Transform your current pod into a deployment. You just need to put everything from `Pod.spec` to the `Deployment.spec.template.spec`.
+1. Transform your current pod into a deployment. You need to put everything from `Pod.spec` to the `Deployment.spec.template.spec`.
 2. What are these "selector"? Can you modify them?
 3. Play along with replicas. Try to delete some pods.
 4. Modify something in you template, and watch closely the way your pods are replaced. Is there any _downtime_?
@@ -422,7 +422,7 @@ kubectl describe deployment <my-dep>
 ### Checks
 
 - [ ] I can still access one of my replica with port-forward
-- [ ] I have listed or described my deployment 
+- [ ] I have listed or described my deployment
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -459,15 +459,15 @@ spec:
 
 ### Why
 
-While you can access your app with port-forwarding, it is not very practical. Moreover, since the app is _stateless_, we want to access any pod.
+While you can access your app with port-forwarding, it is not very convenient. Moreover, since the app is _stateless_, we want to access any pod.
 
-For a start, a internal access would be good enough. That is the job of *Services*, they provide an internal load balancing inside the cluster.
+For a start, an internal access would be good enough. That is the job of *Services*, they provide an internal load balancing inside the cluster.
 
 ### What
 
 You start to know the drill: create a manifest and apply it.
 
-Not that for services, you need to _select_ your pods using their **labels**. The easy thing to do: just use the same labels used in your deployment to find its pods.
+Note that for services, you need to _select_ your pods using their **labels**. The easy thing to do: just use the same labels used in your deployment to find its pods.
 
 ```yaml
 apiVersion: v1
@@ -504,7 +504,7 @@ kubectl port forward svc/<my-svc> 3000:80
 
 1. Create the service manifest, set the correct labels and port and apply it!
 2. You are free to use the external port you want
-3. You can test if the service is functional with `kubectl port-forward svc/<my-svc> <local-port>:<svc-port>` 
+3. You can test if the service is functional with `kubectl port-forward svc/<my-svc> <local-port>:<svc-port>`
 4. Try to break your service: what happen if you set wrong labels ? Can you have a service pointing on multiple deployments?
 
 ### Checks
@@ -522,13 +522,13 @@ You can find the complete solution [here](solution/manifests/service.yaml). Don'
 
 ### Why
 
-Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** and its DNS are already setup for you, all traffic for `*.vcap.me` goes to your cluster
+Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** and its DNS are already setup for you, all traffic for `*.lvh.me` goes to your cluster
 
 However, you need to tell the Ingress Controller where to route the request it receives, depending on its _hostname_ or _path_. That is the job of the **Ingress**: it defines a route to the service you deployed before.
 
 ### What
 
-Create the manifest for an ingress and deploy it! 
+Create the manifest for an ingress and deploy it! The manifest looks like this
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -556,7 +556,7 @@ Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-n
 ```bash
 kubectl get ingress
 kubectl describe ingress <my-ingress>
-# visit https://guestbook.vcap.me/
+# visit https://guestbook.lvh.me/
 ```
 
 ### How
@@ -644,9 +644,9 @@ spec:
 
 ### Why
 
-We wan't to fix our app and give it some persistent storage. However, Redis is a stateful application, a bit more complex than our simple webservice. You could write your own manifests for its deployment, but we would certainly make some mistakes. Let use what the community offers us!
+We wan't to fix our app and give it some persistent storage. However, Redis is a stateful application, a bit more complex than our simple webservice. You could write your own manifests for its deployment, but we would certainly make some mistakes. Let's use what the community offers us!
 
-Helm is tool which helps us
+[Helm](https://helm.sh/) is a tool that helps us
 
 - Generate manifests from YAML templates. You can reduce the boilerplate of your code, reduce repetition etc...
 - Manage our deployments as "packages", and distribute or use remote packages made by the community.
@@ -670,7 +670,7 @@ helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of
    - The chart you want to use is called redis
    - The Helm repository URL is https://charts.bitnami.com/bitnami
    - Don't forget to set your values file
-4. Explore what has been create: pods, deployments (why is there none ?), services, etc...
+4. Explore what has been created: pods, deployments (why is there none ?), services, etc...
 
 ### Checks
 
@@ -698,7 +698,7 @@ Well, you absolutely want to have a guestbook for yourself no?
 
 Your application use an Environment Variable to set the host to the Redis server, has you have done previously in the Docker-Compose file.
 
-The [official documentation](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) is very clear! You just need to find the path to your Redis. Since it is an internal call, you need to use the *Service* created by the Helm chart.
+The [official documentation](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) is very clear! You need to find the path to your Redis. Since it is an internal call, you need to use the *Service* created by the Helm chart.
 
 Once it is set correctly, your app should be _Ready_ and you could access it from its public URL.
 
@@ -755,4 +755,3 @@ I hope you had fun and learned something!
 © 2022 [Padok](https://www.padok.fr/).
 
 Licensed under the [Apache License](https://www.apache.org/licenses/LICENSE-2.0), Version 2.0 ([LICENSE](./LICENSE))
-
