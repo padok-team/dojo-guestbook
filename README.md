@@ -341,7 +341,7 @@ Take some time to [learn a bit about pods](https://kubernetes.io/docs/concepts/w
 3. Try to deploy it, and launch the previous command
 4. If you need to delete it, use `kubectl delete -f manifests/`
 5. Take some time to play around with this object: what happens if you give a non existing image?
-6. Try to access your application with `kubectl port-forward <my-pod> 3000:3000`
+6. Try to access your application with `kubectl port-forward <my-pod> 3000:3000 --address 0.0.0.0`
 
 ### Checks
 
