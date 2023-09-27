@@ -504,7 +504,7 @@ kubectl port forward svc/<my-svc> 3000:80
 
 1. Create the service manifest, set the correct labels and port and apply it!
 2. You are free to use the external port you want
-3. You can test if the service is functional with `kubectl port-forward svc/<my-svc> <local-port>:<svc-port>`
+3. You can test if the service is functional with `kubectl port-forward svc/<my-svc> <local-port>:<svc-port> --address 0.0.0.0`
 4. Try to break your service: what happen if you set wrong labels ? Can you have a service pointing on multiple deployments?
 
 ### Checks
