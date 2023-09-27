@@ -200,17 +200,17 @@ You can find the complete solution [here](solution/Dockerfile). Don't spoil your
 
 </details>
 
-## 3. Run it locally with docker-compose
+## 3. Run it locally with docker compose
 
 ### Why
 
 You have a working local environment, however you already need to chain a few commands, and as your app will be growing more complex, the setup will be harder to maintain.
 
-Instead of having to type an _imperative_ chain of commands, you can have a _declarative_ description of your local _docker/container_ application. That's is why `docker-compose` is made for: it reads this config and run the right `docker commands` for you.
+Instead of having to type an _imperative_ chain of commands, you can have a _declarative_ description of your local _docker/container_ application. That's is why `docker compose` is made for: it reads this config and run the right `docker commands` for you.
 
 ### What
 
-We need to be able to launch the current container with only the `docker-compose up` command.
+We need to be able to launch the current container with only the `docker compose up` command.
 
 The `docker-compose.yaml` file will contains everything needed:
 
@@ -229,7 +229,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 
 ### Checks
 
-- [ ] I can launch locally the application with `docker-compose up`
+- [ ] I can launch locally the application with `docker compose up`
 - [ ] I can see the UI in my brower at `http://<handleGithub>.padok.school:3000`
 
 <details>
@@ -257,7 +257,7 @@ services:
 
 If you test your app, you can see a big **⚠️ No database connection... ⚠️**. Furthermore, when you try to add something to the guestbook, it hangs (⌛) without saving it (try to refresh the page).
 
-The application is actually stateless, and needs a Redis backend to save its state. To avoid interfering with your local installation, we will run it in container, using once again `docker` and `docker-compose`.
+The application is actually stateless, and needs a Redis backend to save its state. To avoid interfering with your local installation, we will run it in container, using once again `docker` and `docker compose`.
 
 ### What
 
@@ -273,7 +273,7 @@ We simply need to add a new service in our docker-compose file, and have a way f
 4. Try to run it: does the application store the state?
 5. (Optional) Make it persistent!
 
-   Currently, if you save some sentences in the app, then run `docker-compose down` and `docker-compose up` again, you'll see that you will loose all your data! 😢
+   Currently, if you save some sentences in the app, then run `docker compose down` and `docker compose up` again, you'll see that you will loose all your data! 😢
 
    You can manage volumes in docker-compose, which are persisted, and mount these volumes in your app. If you prefer, you can also link a local folder to a container, it can be useful for live reloading.
 
@@ -283,7 +283,7 @@ We simply need to add a new service in our docker-compose file, and have a way f
 
    ![Local guestbook with DB](./.assets/local-guestbook-with-db.png)
 
-- [ ] (Optional) If you run `docker-compose down`, you don't loose data when you relaunch the app.
+- [ ] (Optional) If you run `docker compose down`, you don't loose data when you relaunch the app.
 
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
@@ -341,7 +341,7 @@ Take some time to [learn a bit about pods](https://kubernetes.io/docs/concepts/w
 3. Try to deploy it, and launch the previous command
 4. If you need to delete it, use `kubectl delete -f manifests/`
 5. Take some time to play around with this object: what happens if you give a non existing image?
-6. Try to access your application with `kubectl port-forward <my-pod> 3000:3000`
+6. Try to access your application with `kubectl port-forward <my-pod> 3000:3000 --address 0.0.0.0`
 
 ### Checks
 
@@ -504,7 +504,7 @@ kubectl port forward svc/<my-svc> 3000:80
 
 1. Create the service manifest, set the correct labels and port and apply it!
 2. You are free to use the external port you want
-3. You can test if the service is functional with `kubectl port-forward svc/<my-svc> <local-port>:<svc-port>`
+3. You can test if the service is functional with `kubectl port-forward svc/<my-svc> <local-port>:<svc-port> --address 0.0.0.0`
 4. Try to break your service: what happen if you set wrong labels ? Can you have a service pointing on multiple deployments?
 
 ### Checks
