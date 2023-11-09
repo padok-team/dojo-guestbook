@@ -11,18 +11,9 @@ That's why it is essential that:
 
 ## 0. Setup your env
 
-First, you need to setup your computer for the dojo.
-
-Start with cloning this repo:
-
-```bash
-git clone https://github.com/padok-team/dojo-guestbook.git
-cd dojo-guestbook
-```
-
 ### Connect to a distant VM
 
-To work efficiently, you will work on a distant VM on which all the following tools are already installed.
+To work efficiently, you will work on a distant VM on which this repository is already cloned and all the following tools are already installed.
 
 - `git`: Version your code and collaborate
 - [`docker`](https://docs.docker.com/get-docker/): Build and run container images
@@ -294,7 +285,7 @@ You can find the complete solution [here](solution/docker-compose.yaml). Don't s
 
 ## 5. Deploy your app on Kubernetes: the Pod
 
-> If you are here, ask for a quick presentation on Kubernetes. We will make a quick overview for everyone!
+> If you are here before the presentation on Kubernetes, you can wait for it by helping others catch up! We will make a quick explanation for everyone!
 
 ### Why
 
