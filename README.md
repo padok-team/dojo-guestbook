@@ -38,7 +38,7 @@ To connect to the VM:
 
 - Create a github account
 - Create a SSH key on your Github account: [Add a ssh key documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
-- Share your handle Github with Padok's team member
+- Share your Github handle with Padok's team member
 
 - Launch a "Remote SSH Session" with VSCode extension via the command `ssh <handleGithub>@<handleGithub>.padok.school`
 
@@ -87,7 +87,7 @@ curl guestbook.lvh.me
 
 ## 1. (Optional) Build and launch the app locally
 
-> This task is optional, don't loose time on it right now!
+> This task is optional, don't lose time on it right now!
 
 ### Why
 
@@ -114,11 +114,11 @@ When you are happy with the result, you can launch the app with `go run main.go`
 
 While you build and iterate on your app locally, you need to be able to deploy it on a real production environment.
 
-Since you don't know where it will run (in an isolated virtual machine?, which packages are installed?), we want to ensure the reproductability and isolation of the application. That's why containers, that `docker` helps build and run, are made for!
+Since you don't know where it will run (in an isolated virtual machine?, which packages are installed?), we want to ensure the reproductability and isolation of the application. That's what containers, that `docker` helps build and run, are made for!
 
 It is a standard API to build and ship applications across diverse workloads. Whatever the server it is running on, your _image_ should always construct the same isolated environment.
 
-Moreover, it is way less expensive in resources (CPU, RAM) than a Virtual Machine, which acheives an isolation by reinstalling a whole OS.
+Moreover, it is way less expensive in resources (CPU, RAM) than a Virtual Machine, which achieves an isolation by reinstalling a whole OS.
 
 ### What
 
@@ -140,15 +140,15 @@ CMD ["python", "main.py"]
 You can find the complete [Dockerfile reference](https://docs.docker.com/engine/reference/builder/) here.
 
 Here we have a _webservice_ written in _golang_, running an HTTP server on the port `3000`.
-It serves some static files (stored in `/public`), for the UI. You will mainly access it through a `GET /` for the UI, but there are other routes to manage the state of the app.
+It serves some static files (stored in `/public`) for the UI. You will mainly access it through a `GET /` for the UI, but there are other routes to manage the state of the app.
 
 ### How
 
 You can follow such [a tutorial](https://docs.docker.com/language/golang/build-images/)
 
-1. Write a `Dockerfile`. You need to start from a _base _image_, ideally with golang already installed.
-2. In the `Dockerfile`, download the microservice's dependencies. Since latest golang version, we only need `go.mod` and `go.sum` for this task.
-3. In the `Dockerfile`, build the microservice. You need the command `go build` for this.
+1. Write a `Dockerfile`. You need to start from a _base image_, ideally with golang already installed.
+2. In the `Dockerfile`, download the microservice's dependencies using the `go mod download` command. Since latest golang versions, we only need `go.mod` and `go.sum` for this task.
+3. In the `Dockerfile`, build the microservice. You need the `go build` command for this.
 4. In the `Dockerfile`, add the `public` folder inside the container, in the same `public` folder.
 
     ```Dockerfile
@@ -159,18 +159,18 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
 5. Build a container image: `docker build -t guestbook:v0.1.0 .`
 6. Run the container.
 
-   You need to _expose_ the port of your application, which run on `3000`. For this, you need to add the `--publish <external-port>:<internal-port>` to the `docker run` command.
+   You need to _expose_ the port of your application, which runs on port `3000`. For this, you need to add the `--publish <external-port>:<internal-port>` to the `docker run` command.
 
    ```bash
    docker run --publish 3000:3000 guestbook:v0.1.0
    ```
 
 7. Check that the microservice responds to requests on
-   http://<handleGithub>.padok.school:3000. You should see the following UI:
+   `http://<handleGithub>.padok.school:3000`. You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
-8. **Optional**: Implement some best practices, such as "multi-stage builds". It help reduce the size of your images, and increase security.
+8. **Optional**: Implement some best practices, such as "multi-stage builds". It helps reduce the size of your images and increase security.
 
     The image you built so far is pretty large because it contains the entire Go
     toolkit. It's time to make it smaller. Much smaller. Here is what you need to
@@ -206,16 +206,16 @@ You can find the complete solution [here](solution/Dockerfile). Don't spoil your
 
 You have a working local environment, however you already need to chain a few commands, and as your app will be growing more complex, the setup will be harder to maintain.
 
-Instead of having to type an _imperative_ chain of commands, you can have a _declarative_ description of your local _docker/container_ application. That's is why `docker compose` is made for: it reads this config and run the right `docker commands` for you.
+Instead of having to type an _imperative_ chain of commands, you can have a _declarative_ description of your local _docker/container_ application. That's is why `docker compose` is made for: it reads this config and runs the right `docker commands` for you.
 
 ### What
 
 We need to be able to launch the current container with only the `docker compose up` command.
 
-The `docker-compose.yaml` file will contains everything needed:
+The `docker-compose.yaml` file will contain everything needed:
 
 - how to build the image
-- how to run the container, including configuration of port
+- how to run the container, including port configuration
 - how to link it to another container
 - how to persist a storage
 
@@ -294,7 +294,7 @@ You can find the complete solution [here](solution/docker-compose.yaml). Don't s
 
 ## 5. Deploy your app on Kubernetes: the Pod
 
-> If you are here, ask for a quick formation on Kubernetes. We will make a quick overview for everyone!
+> If you are here, ask for a quick presentation on Kubernetes. We will make a quick overview for everyone!
 
 ### Why
 
@@ -304,7 +304,7 @@ Now that we can run our application locally, we want to deploy it to Kubernetes,
 
 We will start with the basics: a Pod. It is the basic unit to run something on Kubernetes. It is composed of one or several containers, running together.
 
-Here an example of a Pod manifest:
+Here is an example of a Pod manifest:
 
 ```yaml
 apiVersion: v1
@@ -417,11 +417,11 @@ kubectl describe deployment <my-dep>
 1. Transform your current pod into a deployment. You need to put everything from `Pod.spec` to the `Deployment.spec.template.spec`.
 2. What are these "selector"? Can you modify them?
 3. Play along with replicas. Try to delete some pods.
-4. Modify something in you template, and watch closely the way your pods are replaced. Is there any _downtime_?
+4. Modify something in your template, and watch closely the way your pods are replaced. Is there any _downtime_?
 
 ### Checks
 
-- [ ] I can still access one of my replica with port-forward
+- [ ] I can still access one of my replicas with port-forward
 - [ ] I have listed or described my deployment
 
 <details>
@@ -483,11 +483,11 @@ spec:
       targetPort: 8080
 ```
 
-In the cluster, other pods will be able to call one the pod behind the service, just with
+In the cluster, other pods will be able to call one of the pods behind the service, just with
 
 ```bash
 curl http://my-service # request one of the pods selected by the service
-# if your pod run in a different namespace, you need to specify it
+# if your pod runs in a different namespace, you need to specify it
 curl http://my-service.my-ns
 ```
 
@@ -505,7 +505,7 @@ kubectl port forward svc/<my-svc> 3000:80
 1. Create the service manifest, set the correct labels and port and apply it!
 2. You are free to use the external port you want
 3. You can test if the service is functional with `kubectl port-forward svc/<my-svc> <local-port>:<svc-port> --address 0.0.0.0`
-4. Try to break your service: what happen if you set wrong labels ? Can you have a service pointing on multiple deployments?
+4. Try to break your service: what happens if you set wrong labels? Can you have a service pointing to multiple deployments?
 
 ### Checks
 
@@ -562,8 +562,8 @@ kubectl describe ingress <my-ingress>
 ### How
 
 1. Write a manifest and apply it. Choose a specific hostname for your app and your namespace if you share the cluster
-2. Try to access your app, do you have HTTPs ?
-3. Try to deploy your app on a _subpath_ using the `nginx.ingress.kubernetes.io/rewrite-target: /` annotation, or on a subdomain by modifying the `path` and host.
+2. Try to access your app, do you have HTTPS?
+3. Try to deploy your app on a _subdomain_ or on a _subpath_ using the `nginx.ingress.kubernetes.io/rewrite-target: /` annotation and modifying the `path` and `host`.
 
 ### Checks
 
@@ -592,14 +592,14 @@ Our app exposes its status at `/healthz`, if the application is not functional i
 
 ### How
 
-1. Modify your deployment and add probes to your main container. Which type of probes do you need ?
-2. Apply it. Is your application still available on the URL? It should not but rolling updates protects your. Ask a teacher about it.
-3. Remove the "zombie" pods. You can delete and apply back the deployment, but a more elegant solution is to _scale down_ the replica set under the deployment (`kubectl scale replicaset <my-rs> --replicas 0`). You don't know what is a replicat set? Ask!
-4. Is your website still available? Does the [HTTP error code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) makes sense?
+1. Modify your deployment and add probes to your main container. Which type of probes do you need?
+2. Apply it. Is your application still available on the URL? It should not be, but rolling updates protections keep it available. Ask a teacher about it.
+3. Remove the "zombie" pods. You can delete and apply back the deployment, but a more elegant solution is to _scale down_ the replica set under the deployment (`kubectl scale replicaset <my-rs> --replicas 0`). You don't know what a replicat set is? Ask!
+4. Is your website still available? Does the [HTTP error code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) make sense?
 
 ### Checks
 
-- [ ] All my pods are "notReady" or "Failing"
+- [ ] All my pods are "Failing" or not "Ready"
 - [ ] The website is down
 
 <details>
@@ -644,7 +644,7 @@ spec:
 
 ### Why
 
-We wan't to fix our app and give it some persistent storage. However, Redis is a stateful application, a bit more complex than our simple webservice. You could write your own manifests for its deployment, but we would certainly make some mistakes. Let's use what the community offers us!
+We want to fix our app and give it some persistent storage. However, Redis is a stateful application, a bit more complex than our simple webservice. We could write our own manifests for its deployment, but we would certainly make some mistakes. Let's use what the community offers us!
 
 [Helm](https://helm.sh/) is a tool that helps us
 
@@ -653,7 +653,7 @@ We wan't to fix our app and give it some persistent storage. However, Redis is a
 
 ### What
 
-The [Helm documentation](https://helm.sh/docs/intro/quickstart/) is quite good, but unless you have time, don't loose too much time on it.
+The [Helm documentation](https://helm.sh/docs/intro/quickstart/) is quite good, but unless you have time, don't lose too much time on it.
 
 We will only need one command, which installs or upgrades a _release_ (ie a deployment package). We will use the _redis_ chart from the _bitnami_ repository, identified by its URL. Lastly, we will set one specific option, using a `values.yaml` file.
 
@@ -664,7 +664,7 @@ helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of
 ### How
 
 1. We will use the _Bitnami_ Redis chart, you can find its [source code here](https://github.com/bitnami/charts/tree/master/bitnami/redis).
-2. Create your `values.yaml` file. You only need to set `architecture: standalone`, but you can explore other options in the `values.yaml` of the repository.
+2. Create your `values.yaml` file. You only need to set `architecture: standalone` and disable the authentication, but you can explore other options in the `values.yaml` of the repository.
 3. Deploy your release with the `helm` command:
    - You can name your release as you want, but if you name it the same name as the chart, the name of the resources will be shorter.
    - The chart you want to use is called redis
@@ -683,7 +683,7 @@ helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of
 Simple run:
 
 ```bash
-helm upgrade --install redis redis --repo https://charts.bitnami.com/bitnami --set architecture=standalone
+helm upgrade --install redis redis --repo https://charts.bitnami.com/bitnami --set architecture=standalone --set auth.enabled=false
 ```
 
 </details>
@@ -696,11 +696,11 @@ Well, you absolutely want to have a guestbook for yourself no?
 
 ### What
 
-Your application use an Environment Variable to set the host to the Redis server, has you have done previously in the Docker-Compose file.
+Your application uses an Environment Variable to set the host to the Redis server, as you have done previously in the Docker-Compose file.
 
 The [official documentation](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) is very clear! You need to find the path to your Redis. Since it is an internal call, you need to use the *Service* created by the Helm chart.
 
-Once it is set correctly, your app should be _Ready_ and you could access it from its public URL.
+Once it is set correctly, your app should be _Ready_ and you should be able to access it from its public URL.
 
 ### How
 
@@ -752,6 +752,6 @@ I hope you had fun and learned something!
 
 ## LICENSE
 
-© 2022 [Padok](https://www.padok.fr/).
+© 2023 [Padok](https://www.padok.fr/).
 
 Licensed under the [Apache License](https://www.apache.org/licenses/LICENSE-2.0), Version 2.0 ([LICENSE](./LICENSE))
