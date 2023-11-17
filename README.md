@@ -40,6 +40,7 @@ We have a script ready for you, it uses the `kind-cluster.yaml` config in this r
 It also installs an _Ingress Controller_, which acts as a reverse proxy for your cluster.
 
 ```bash
+cd dojo-guestbook
 ./scripts/bootstrap.sh
 
 # At the end of the workshop to delete the cluster
@@ -138,17 +139,18 @@ It serves some static files (stored in `/public`) for the UI. You will mainly ac
 You can follow such [a tutorial](https://docs.docker.com/language/golang/build-images/)
 
 1. Write a `Dockerfile`. You need to start from a _base image_, ideally with golang already installed.
-2. In the `Dockerfile`, download the microservice's dependencies using the `go mod download` command. Since latest golang versions, we only need `go.mod` and `go.sum` for this task.
-3. In the `Dockerfile`, build the microservice. You need the `go build` command for this.
-4. In the `Dockerfile`, add the `public` folder inside the container, in the same `public` folder.
+2. Define a working directory.
+3. In the `Dockerfile`, download the microservice's dependencies using the `go mod download` command. Since latest golang versions, we only need `go.mod` and `go.sum` for this task.
+4. In the `Dockerfile`, build the microservice. You need the `go build` command for this.
+5. In the `Dockerfile`, add the `public` folder inside the container, in the same `public` folder.
 
     ```Dockerfile
     COPY ./public public
     ```
 
-4. When the container starts, run the microservice.
-5. Build a container image: `docker build -t guestbook:v0.1.0 .`
-6. Run the container.
+6. When the container starts, run the microservice.
+7. Build a container image: `docker build -t guestbook:v0.1.0 .`
+8. Run the container.
 
    You need to _expose_ the port of your application, which runs on port `3000`. For this, you need to add the `--publish <external-port>:<internal-port>` to the `docker run` command.
 
@@ -156,12 +158,12 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
    docker run --publish 3000:3000 guestbook:v0.1.0
    ```
 
-7. Check that the microservice responds to requests on
+9. Check that the microservice responds to requests on
    `http://<handleGithub>.padok.school:3000`. You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
-8. **Optional**: Implement some best practices, such as "multi-stage builds". It helps reduce the size of your images and increase security.
+10. **Optional**: Implement some best practices, such as "multi-stage builds". It helps reduce the size of your images and increase security.
 
     The image you built so far is pretty large because it contains the entire Go
     toolkit. It's time to make it smaller. Much smaller. Here is what you need to
@@ -169,12 +171,12 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
 
     1. Check to see how big your container image is.
     2. Change the `go build` command to make the binary statically linked (if you
-    don't know what that means, just ask!).
-    1. In your `Dockerfile`, create a second stage that starts from `scratch`.
-    2. Copy the binary from the first stage to the second.
-    3. In the second stage, run the microservice.
-    4. Build your container image again.
-    5. Check to see how big the image is now.
+    don't know what that means, just ask!). You might need to add a `go mod tidy` command.
+    3. In your `Dockerfile`, create a second stage that starts from `scratch`.
+    4. Copy the binary from the first stage to the second.
+    5. In the second stage, run the microservice.
+    6. Build your container image again.
+    7. Check to see how big the image is now.
 
 
 
@@ -289,7 +291,7 @@ You can find the complete solution [here](solution/docker-compose.yaml). Don't s
 
 ### Why
 
-Now that we can run our application locally, we want to deploy it to Kubernetes, which is a container orchestrator.
+Now that we can run our application locally, we want to take it a step further: we will recreate everything we have done using Docker Compose, in Kubernetes using manifests and Helm charts!
 
 ### What
 
