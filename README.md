@@ -24,14 +24,27 @@ To work efficiently, you will work on a distant VM on which this repository is a
 
 To connect to the VM:
 
-- Install VSCode
-- Add the following [Remote SSH extension](https://code.visualstudio.com/docs/remote/ssh) to VSCode
+- Go to https://\<handleGithub\>.training.padok.school
+- The password is `<handleGithub>12345`
 
+<details>
+<summary>💡 Tip N˚1</summary>
+
+Once in VSCode to see this document in a more human friendly way press `crtl+shift+v` or `cmd+shift+v` for mac os
+
+</details>
+
+<details>
+<summary>If you have your own VSCode configured and your github account as a ssh key configure. You can connect through ssh.</summary>
+
+- Add the following [Remote SSH extension](https://code.visualstudio.com/docs/remote/ssh) to VSCode
 - Create a github account
 - Create a SSH key on your Github account: [Add a ssh key documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 - Share your Github handle with Padok's team member
 
-- Launch a "Remote SSH Session" with VSCode extension via the command `ssh <handleGithub>@<handleGithub>.padok.school`
+- Launch a "Remote SSH Session" with VSCode extension via the command `ssh <handleGithub>@<handleGithub>.ssh.padok.school`
+
+</details>
 
 ### Setup a Kubernetes cluster on your VM
 
@@ -57,7 +70,8 @@ $ kubectl get pods
 No resources found in default namespace.
 ```
 
-To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind.
+To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind. \
+You can visit https://\<handleGithub\>.training.padok.school/proxy/80 OR
 
 ```bash
 curl guestbook.lvh.me
@@ -75,7 +89,7 @@ curl guestbook.lvh.me
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
 - [ ] I can run a container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
-- [ ] I can contact my cluster through http/https: `curl <my-cluster-addr>` returns a 404
+- [ ] I can contact my cluster through http/https: https://\<handleGithub\>.training.padok.school/proxy/80 returns a 404
 
 ## 1. (Optional) Build and launch the app locally
 
@@ -93,12 +107,31 @@ Be creative, try to modify a simple thing in the app.
 
 For this you simply need the `go` cli installed and some knownledge of this language.
 
-When you are happy with the result, you can launch the app with `go run main.go`, or build a binary with `go build`.
+To install the `go` cli:
+```bash
+sudo apt-get -y install golang-go
+```
+
+When you are happy with the result, you can launch the app with `sudo go run main.go`, or build a binary with `sudo go build`.
 
 ### Checks
 
 - [ ] I can run the app locally, and see the web UI.
 - [ ] I have implemented a small change in the application and it still runs
+
+<details>
+<summary>🔍 Hint N˚1</summary>
+
+Your app is running on the port 3000
+
+</details>
+
+<details>
+<summary>🔍 Hint N˚2</summary>
+
+You can see it on https://\<handleGithub\>.training.padok.school/proxy/3000
+
+</details>
 
 ## 2. Build a container image (Docker)
 
@@ -136,7 +169,7 @@ It serves some static files (stored in `/public`) for the UI. You will mainly ac
 
 ### How
 
-You can follow such [a tutorial](https://docs.docker.com/language/golang/build-images/)
+You can follow [this tutorial](https://docs.docker.com/language/golang/build-images/) to see how to build a golang image
 
 1. Write a `Dockerfile`. You need to start from a _base image_, ideally with golang already installed.
 2. Define a working directory.
@@ -144,9 +177,9 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
 4. In the `Dockerfile`, build the microservice. You need the `go build` command for this.
 5. In the `Dockerfile`, add the `public` folder inside the container, in the same `public` folder.
 
-    ```Dockerfile
-    COPY ./public public
-    ```
+   ```Dockerfile
+   COPY ./public public
+   ```
 
 6. When the container starts, run the microservice.
 7. Build a container image: `docker build -t guestbook:v0.1.0 .`
@@ -159,7 +192,7 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
    ```
 
 9. Check that the microservice responds to requests on
-   `http://<handleGithub>.padok.school:3000`. You should see the following UI:
+   `http://<handleGithub>.training.padok.school/proxy/3000`. You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
@@ -178,8 +211,6 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
     6. Build your container image again.
     7. Check to see how big the image is now.
 
-
-
 ### Checks
 
 - [ ] I can build an image locally
@@ -189,7 +220,7 @@ You can follow such [a tutorial](https://docs.docker.com/language/golang/build-i
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
 
-You can find the complete solution [here](solution/Dockerfile). Don't spoil yourself too much!
+You can find the solution for the single-stage build [here](solution/Dockerfile) or [here](solution/Dockerfile-multistage) for the multi-stage build. Don't spoil yourself too much!
 
 </details>
 
@@ -223,7 +254,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 ### Checks
 
 - [ ] I can launch locally the application with `docker compose up`
-- [ ] I can see the UI in my brower at `http://<handleGithub>.padok.school:3000`
+- [ ] I can see the UI in my brower at `http://<handleGithub>.training.padok.school/proxy/3000`
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -490,7 +521,7 @@ Here is the [official documentation](https://kubernetes.io/docs/concepts/service
 kubectl get services
 kubectl describe service <my-svc>
 kubectl port forward svc/<my-svc> 3000:80
-# lets see on http://<handleGithub>.padok.school:3000
+# lets see on http://<handleGithub>.training.padok.school/proxy/3000
 ```
 
 ### How
@@ -549,7 +580,7 @@ Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-n
 ```bash
 kubectl get ingress
 kubectl describe ingress <my-ingress>
-# visit https://guestbook.lvh.me/
+# visit https://\<handleGithub\>.training.padok.school/proxy/80
 ```
 
 ### How
@@ -587,7 +618,7 @@ Our app exposes its status at `/healthz`, if the application is not functional i
 
 1. Modify your deployment and add probes to your main container. Which type of probes do you need?
 2. Apply it. Is your application still available on the URL? It should not be, but rolling updates protections keep it available. Ask a teacher about it.
-3. Remove the "zombie" pods. You can delete and apply back the deployment, but a more elegant solution is to _scale down_ the replica set under the deployment (`kubectl scale replicaset <my-rs> --replicas 0`). You don't know what a replicat set is? Ask!
+3. Remove the "zombie" pods. You can delete and apply back the deployment, but a more elegant solution is to _scale down_ the replica set under the deployment (`kubectl scale deployment <my-deploy> --replicas 0`).
 4. Is your website still available? Does the [HTTP error code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) make sense?
 
 ### Checks
@@ -678,6 +709,8 @@ Simple run:
 ```bash
 helm upgrade --install redis redis --repo https://charts.bitnami.com/bitnami --set architecture=standalone --set auth.enabled=false
 ```
+
+You can see the complete solution [here](solution/helm/)
 
 </details>
 
