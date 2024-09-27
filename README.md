@@ -5,7 +5,7 @@ Your goal is to deploy a simple web application in a Kubernetes cluster, and lea
 
 That's why it is essential that:
 
-- You experiment and try things that may break. Don't simply copy paste everything from StackOverflow until it passes the test !
+- You experiment and try things that may break. Don't simply copy paste everything from StackOverflow or your favorite LLM until it passes the test !
 - But also keep focus on your goal: have a working application, piece by piece. Don't block at the start for a detail.
 - To keep moving or learn more, please _andon_! It means then whenever you have a question, a doubt, a feedback, call someone from the staff, we'll love to help you.
 
@@ -35,7 +35,7 @@ Once in VSCode to see this document in a more human friendly way press `crtl+shi
 </details>
 
 <details>
-<summary>If you have your own VSCode configured and your github account as a ssh key configure. You can connect through ssh.</summary>
+<summary>[not recommended] If you have your own VSCode configured and your github account is configured with a ssh public key, you can connect through ssh.</summary>
 
 - Add the following [Remote SSH extension](https://code.visualstudio.com/docs/remote/ssh) to VSCode
 - Create a github account
@@ -46,7 +46,7 @@ Once in VSCode to see this document in a more human friendly way press `crtl+shi
 
 </details>
 
-### Setup a Kubernetes cluster on your VM
+### Setup your work environment
 
 We have a script ready for you, it uses the `kind-cluster.yaml` config in this repo for the cluster configuration. If you need more nodes, you'll need to modify it.
 
@@ -60,7 +60,7 @@ cd dojo-guestbook
 # ./scripts/teardown.sh
 ```
 
-You should be able to run some `kubectl` queries automatically:
+You should be able to run some `kubectl` queries directly:
 
 ```bash
 $ kubectl get nodes
@@ -71,7 +71,7 @@ No resources found in default namespace.
 ```
 
 To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind. \
-You can visit https://\<handleGithub\>.training.padok.school/proxy/80 OR
+You can visit https://\<handleGithub\>.training.padok.school/proxy/80 OR use the following command
 
 ```bash
 curl guestbook.lvh.me
@@ -84,10 +84,10 @@ curl guestbook.lvh.me
 </html>
 ```
 
-### Checks (before you go on)
+### Checks (before you start the exercise)
 
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
-- [ ] I can run a container: `docker run hello-world`
+- [ ] I can run a docker container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
 - [ ] I can contact my cluster through http/https: https://\<handleGithub\>.training.padok.school/proxy/80 returns a 404
 
