@@ -7,6 +7,6 @@ spec:
     app: guestbook
     project: dojo
   ports:
-  - port: 3000
-    targetPort: http
-    name: http
+    - port: 3000
+      targetPort: http
+      name: http
