@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine AS build
+FROM golang:1.17-alpine@sha256:02685740eb7129ae4354c04100b19e13b8b38dbe8bbbc6d68fddb5f7b3c19d23 AS build
 
 WORKDIR /app
 
