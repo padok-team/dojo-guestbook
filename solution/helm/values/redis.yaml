@@ -1,4 +1,5 @@
 architecture: standalone
+replicaCount: 1
 
 auth:
   enabled: false
