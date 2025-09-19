@@ -20,8 +20,8 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
-	"github.com/urfave/negroni"
-	"github.com/xyproto/simpleredis"
+	negroni "github.com/urfave/negroni/v3"
+	simpleredis "github.com/xyproto/simpleredis/v2"
 )
 
 var (
