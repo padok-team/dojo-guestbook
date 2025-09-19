@@ -13,7 +13,7 @@ services:
       - redis
 
   redis:
-    image: redis:7
+    image: redis:7@sha256:edfad62e79bbbad4bc6efd528f6a7ca95546f4c0ab5ca504a83952a8cbdc13ae
     ports: 
       - 6379:6379
     volumes:
