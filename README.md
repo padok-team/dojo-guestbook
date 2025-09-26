@@ -687,12 +687,12 @@ helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of
 
 ### How
 
-1. We will use the _Bitnami_ Redis chart, you can find its [source code here](https://github.com/bitnami/charts/tree/master/bitnami/redis).
-2. Create your `values.yaml` file. You only need to set `architecture: standalone` and disable the authentication, but you can explore other options in the `values.yaml` of the repository.
+1. We will use the _CloudPirates_ Redis chart, you can find its [source code here](https://github.com/CloudPirates-io/helm-charts/tree/main/charts/redis).
+2. Create your `values.yaml` file. You only need to set `architecture: standalone`, `replicaCount: 1`, and disable the authentication, but you can explore other options in the `values.yaml` of the repository.
 3. Deploy your release with the `helm` command:
    - You can name your release as you want, but if you name it the same name as the chart, the name of the resources will be shorter.
    - The chart you want to use is called redis
-   - The Helm repository URL is https://charts.bitnami.com/bitnami
+   - The Helm repository URL is `oci://registry-1.docker.io/cloudpirates/redis`
    - Don't forget to set your values file
 4. Explore what has been created: pods, deployments (why is there none ?), services, etc...
 
@@ -707,7 +707,10 @@ helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of
 Simple run:
 
 ```bash
-helm upgrade --install redis redis --repo https://charts.bitnami.com/bitnami --set architecture=standalone --set auth.enabled=false
+helm upgrade --install redis oci://registry-1.docker.io/cloudpirates/redis \
+  --set architecture=standalone \
+  --set auth.enabled=false \
+  --set replicaCount=1
 ```
 
 You can see the complete solution [here](solution/helm/)
