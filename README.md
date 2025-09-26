@@ -24,25 +24,13 @@ To work efficiently, you will work on a distant VM on which this repository is a
 
 To connect to the VM:
 
-- Go to https://\<handleGithub\>.training.padok.school
+- Go to https://\<handleGithub\>.dojo.padok.school
 - The password is `<handleGithub>12345`
 
 <details>
 <summary>💡 Tip N˚1</summary>
 
 Once in VSCode to see this document in a more human friendly way press `crtl+shift+v` or `cmd+shift+v` for mac os
-
-</details>
-
-<details>
-<summary>[not recommended] If you have your own VSCode configured and your github account is configured with a ssh public key, you can connect through ssh.</summary>
-
-- Add the following [Remote SSH extension](https://code.visualstudio.com/docs/remote/ssh) to VSCode
-- Create a github account
-- Create a SSH key on your Github account: [Add a ssh key documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
-- Share your Github handle with Padok's team member
-
-- Launch a "Remote SSH Session" with VSCode extension via the command `ssh <handleGithub>@<handleGithub>.ssh.padok.school`
 
 </details>
 
@@ -56,7 +44,7 @@ It also installs an _Ingress Controller_, which acts as a reverse proxy for your
 cd dojo-guestbook
 ./scripts/bootstrap.sh
 
-# At the end of the workshop to delete the cluster
+# At the end of the workshop to delete the cluster, run:
 # ./scripts/teardown.sh
 ```
 
@@ -65,16 +53,17 @@ You should be able to run some `kubectl` queries directly:
 ```bash
 $ kubectl get nodes
 NAME                           STATUS   ROLES                  AGE     VERSION
-padok-training-control-plane   Ready    control-plane,master   3m29s   v1.22.5
+theodo-training-control-plane   Ready    control-plane,master   3m29s   v1.22.5
 $ kubectl get pods
 No resources found in default namespace.
 ```
 
 To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind. \
-You can visit https://\<handleGithub\>.training.padok.school/proxy/80 OR use the following command
+You can visit https://\<handleGithub\>.dojo.padok.school/proxy/80 OR use the following command
 
 ```bash
 curl guestbook.lvh.me
+
 <html>
 <head><title>404 Not Found</title></head>
 <body>
@@ -89,7 +78,7 @@ curl guestbook.lvh.me
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
 - [ ] I can run a docker container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
-- [ ] I can contact my cluster through http/https: https://\<handleGithub\>.training.padok.school/proxy/80 returns a 404
+- [ ] I can contact my cluster through http/https: https://\<handleGithub\>.dojo.padok.school/proxy/80 returns a 404
 
 ## 1. (Optional) Build and launch the app locally
 
@@ -129,7 +118,7 @@ Your app is running on the port 3000
 <details>
 <summary>🔍 Hint N˚2</summary>
 
-You can see it on https://\<handleGithub\>.training.padok.school/proxy/3000
+You can see it on https://\<handleGithub\>.dojo.padok.school/proxy/3000
 
 </details>
 
@@ -192,7 +181,7 @@ You can follow [this tutorial](https://docs.docker.com/language/golang/build-ima
    ```
 
 9. Check that the microservice responds to requests on
-   `http://<handleGithub>.training.padok.school/proxy/3000`. You should see the following UI:
+   `http://<handleGithub>.dojo.padok.school/proxy/3000`. You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
@@ -254,7 +243,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 ### Checks
 
 - [ ] I can launch locally the application with `docker compose up`
-- [ ] I can see the UI in my brower at `http://<handleGithub>.training.padok.school/proxy/3000`
+- [ ] I can see the UI in my brower at `http://<handleGithub>.dojo.padok.school/proxy/3000`
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -361,7 +350,7 @@ Take some time to [learn a bit about pods](https://kubernetes.io/docs/concepts/w
 ### How
 
 1. Write a `pod.yaml` file (the VSCode extension can help you with that)
-2. At minimum, you need a name and a first container definition, with its name and image. For the image, you can push the image to a public registry, or for *kind* add it to the cluster with `kind load docker-image "${IMAGE}" --name padok-training`. You can also use the following: `dixneuf19/guestbook:v0.1.0`.
+2. At minimum, you need a name and a first container definition, with its name and image. For the image, you can push the image to a public registry, or for *kind* add it to the cluster with `kind load docker-image "${IMAGE}" --name theodo-training`. You can also use the following: `ghcr.io/padok-team/dojo-guestbook:latest`.
 3. Try to deploy it, and launch the previous command
 4. If you need to delete it, use `kubectl delete -f manifests/`
 5. Take some time to play around with this object: what happens if you give a non existing image?
@@ -388,7 +377,7 @@ metadata:
 spec:
   containers:
   - name: guestbook
-    image: dixneuf19/guestbook:v0.1.0
+    image: ghcr.io/padok-team/dojo-guestbook:latest
     ports:
     - containerPort: 3000
       name: http
@@ -470,7 +459,7 @@ spec:
     spec:
       containers:
       - name: guestbook
-        image: dixneuf19/guestbook:v0.1.0
+        image: ghcr.io/padok-team/dojo-guestbook:latest
         ports:
         - containerPort: 3000
           name: http
@@ -521,7 +510,7 @@ Here is the [official documentation](https://kubernetes.io/docs/concepts/service
 kubectl get services
 kubectl describe service <my-svc>
 kubectl port forward svc/<my-svc> 3000:80
-# lets see on http://<handleGithub>.training.padok.school/proxy/3000
+# lets see on http://<handleGithub>.dojo.padok.school/proxy/3000
 ```
 
 ### How
@@ -580,7 +569,7 @@ Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-n
 ```bash
 kubectl get ingress
 kubectl describe ingress <my-ingress>
-# visit https://\<handleGithub\>.training.padok.school/proxy/80
+# visit https://\<handleGithub\>.dojo.padok.school/proxy/80
 ```
 
 ### How
@@ -648,7 +637,7 @@ spec:
     spec:
       containers:
       - name: guestbook
-        image: dixneuf19/guestbook:v0.1.0
+        image: ghcr.io/padok-team/dojo-guestbook:latest
         ports:
         - containerPort: 3000
           name: http
@@ -781,6 +770,6 @@ I hope you had fun and learned something!
 
 ## LICENSE
 
-© 2023 [Padok](https://www.padok.fr/).
+© 2025 [Theodo Cloud](https://cloud.theodo.com/).
 
 Licensed under the [Apache License](https://www.apache.org/licenses/LICENSE-2.0), Version 2.0 ([LICENSE](./LICENSE))

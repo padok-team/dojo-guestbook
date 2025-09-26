@@ -14,6 +14,6 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 # Delete the Kubernetes cluster.
 _info "💥 Destroying the local Kubernetes cluster..."
-kind delete cluster --name=padok-training
+kind delete cluster --name=theodo-training
 
 _info "👋 See you again soon!"

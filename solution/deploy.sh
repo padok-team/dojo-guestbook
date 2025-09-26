@@ -9,7 +9,7 @@ function _info() {
     echo "${bold}${1}${normal}"
 }
 
-CLUSTER_NAME=padok-training
+CLUSTER_NAME=theodo-training
 
 # Run script from directory where the script is stored.
 cd "$( dirname "${BASH_SOURCE[0]}" )"
