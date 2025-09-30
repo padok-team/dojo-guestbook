@@ -768,6 +768,10 @@ docker ps --quiet --all | xargs docker rm
 
 I hope you had fun and learned something!
 
+## Give us some feedback!
+
+Help us make a better dojo next time by **submitting your feedback here**: https://bit.ly/feedback-dojo-kubernetes
+
 ## LICENSE
 
 © 2025 [Theodo Cloud](https://cloud.theodo.com/).
