@@ -118,7 +118,7 @@ Your app is running on the port 3000
 <details>
 <summary>🔍 Hint N˚2</summary>
 
-You can see it on https://\<handleGithub\>.training.dojo.padok.school/proxy/3000
+You can see it on https://\<handleGithub\>.training.dojo.padok.school/proxy/3000/
 
 </details>
 
@@ -181,7 +181,7 @@ You can follow [this tutorial](https://docs.docker.com/language/golang/build-ima
    ```
 
 9. Check that the microservice responds to requests on
-   `http://<handleGithub>.training.dojo.padok.school/proxy/3000`. You should see the following UI:
+   `http://<handleGithub>.training.dojo.padok.school/proxy/3000/`. You should see the following UI:/
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
@@ -243,7 +243,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 ### Checks
 
 - [ ] I can launch locally the application with `docker compose up`
-- [ ] I can see the UI in my brower at `http://<handleGithub>.training.dojo.padok.school/proxy/3000`
+- [ ] I can see the UI in my brower at `http://<handleGithub>.training.dojo.padok.school/proxy/3000/`
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -510,7 +510,7 @@ Here is the [official documentation](https://kubernetes.io/docs/concepts/service
 kubectl get services
 kubectl describe service <my-svc>
 kubectl port forward svc/<my-svc> 3000:80
-# lets see on http://<handleGithub>.training.dojo.padok.school/proxy/3000
+# lets see on http://<handleGithub>.training.dojo.padok.school/proxy/3000/
 ```
 
 ### How
@@ -569,7 +569,7 @@ Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-n
 ```bash
 kubectl get ingress
 kubectl describe ingress <my-ingress>
-# visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80
+# visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80/
 ```
 
 ### How
