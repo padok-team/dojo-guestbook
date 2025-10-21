@@ -1,6 +1,6 @@
 module github.com/padok-team/dojo-guestbook
 
-go 1.25
+go 1.25.3
 
 require (
 	github.com/gorilla/mux v1.8.1
