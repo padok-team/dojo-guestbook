@@ -61,7 +61,7 @@ No resources found in default namespace.
 ```
 
 To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind. \
-You can visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80 OR use the following command if you work on your local machine:
+You can visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80/ OR use the following command if you work on your local machine:
 
 ```bash
 curl guestbook.lvh.me
@@ -82,7 +82,7 @@ curl guestbook.lvh.me
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
 - [ ] I can run a docker container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
-- [ ] I can contact my cluster through ingress: https://\<handleGithub\>.training.dojo.padok.school/proxy/80 (or http://guestbook.lvh.me) returns a 404
+- [ ] I can contact my cluster through ingress: https://\<handleGithub\>.training.dojo.padok.school/proxy/80/ (or http://guestbook.lvh.me) returns a 404
 
 ## 1. (Optional) Build and launch the app locally
 
@@ -182,7 +182,7 @@ You can follow [this tutorial](https://docs.docker.com/language/golang/build-ima
    ```
 
 9. Check that the microservice responds to requests on
-   `http://<handleGithub>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally). You should see the following UI:/
+   `http://<handleGithub>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally). You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
