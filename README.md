@@ -11,9 +11,11 @@ That's why it is essential that:
 
 ## 0. Setup your env
 
-### Connect to a distant VM
+### Connect to a distant VM or setup tools locally
 
 To work efficiently, you will work on a distant VM on which this repository is already cloned and all the following tools are already installed.
+
+_Alternatively, if you work on your local machine, you can install the following tools:_
 
 - `git`: Version your code and collaborate
 - [`docker`](https://docs.docker.com/get-docker/): Build and run container images
@@ -22,7 +24,7 @@ To work efficiently, you will work on a distant VM on which this repository is a
 - [`helm`](https://helm.sh/docs/intro/install/): Generate Kubernetes manifest from templates and manage their deployment
 - [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/#installation): Create a Kubernetes locally inside containers
 
-To connect to the VM:
+To connect **to the distant VM**:
 
 - Go to https://\<handleGithub\>.training.dojo.padok.school
 - The password is `<handleGithub>12345`
@@ -30,7 +32,7 @@ To connect to the VM:
 <details>
 <summary>💡 Tip N˚1</summary>
 
-Once in VSCode to see this document in a more human friendly way press `crtl+shift+v` or `cmd+shift+v` for mac os
+Once in VSCode to see this document in a more human friendly way press `crtl+shift+v` or `cmd+shift+v` for macOS
 
 </details>
 
@@ -53,13 +55,13 @@ You should be able to run some `kubectl` queries directly:
 ```bash
 $ kubectl get nodes
 NAME                           STATUS   ROLES                  AGE     VERSION
-theodo-training-control-plane   Ready    control-plane,master   3m29s   v1.22.5
+theodo-training-control-plane   Ready    control-plane,master   3m29s   v1.34.0
 $ kubectl get pods
 No resources found in default namespace.
 ```
 
 To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind. \
-You can visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80 OR use the following command
+You can visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80 OR use the following command if you work on your local machine:
 
 ```bash
 curl guestbook.lvh.me
@@ -73,12 +75,14 @@ curl guestbook.lvh.me
 </html>
 ```
 
+**Note:** `*.lvh.me` is a special domain that resolves always to `127.0.0.1`, so it works perfectly for local development.
+
 ### Checks (before you start the exercise)
 
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
 - [ ] I can run a docker container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
-- [ ] I can contact my cluster through http/https: https://\<handleGithub\>.training.dojo.padok.school/proxy/80 returns a 404
+- [ ] I can contact my cluster through ingress: https://\<handleGithub\>.training.dojo.padok.school/proxy/80 (or http://guestbook.lvh.me) returns a 404
 
 ## 1. (Optional) Build and launch the app locally
 
@@ -96,12 +100,9 @@ Be creative, try to modify a simple thing in the app.
 
 For this you simply need the `go` cli installed and some knownledge of this language.
 
-To install the `go` cli:
-```bash
-sudo apt-get -y install golang-go
-```
+Follow [official Go documentation](https://go.dev/doc/install) to install Go on your machine.
 
-When you are happy with the result, you can launch the app with `sudo go run main.go`, or build a binary with `sudo go build`.
+When you are happy with the result, you can launch the app with `go run main.go`, or build a binary with `go build`.
 
 ### Checks
 
@@ -118,7 +119,7 @@ Your app is running on the port 3000
 <details>
 <summary>🔍 Hint N˚2</summary>
 
-You can see it on https://\<handleGithub\>.training.dojo.padok.school/proxy/3000/
+You can see it on https://\<handleGithub\>.training.dojo.padok.school/proxy/3000/ (or http://localhost:3000 if developing locally)
 
 </details>
 
@@ -181,7 +182,7 @@ You can follow [this tutorial](https://docs.docker.com/language/golang/build-ima
    ```
 
 9. Check that the microservice responds to requests on
-   `http://<handleGithub>.training.dojo.padok.school/proxy/3000/`. You should see the following UI:/
+   `http://<handleGithub>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally). You should see the following UI:/
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
@@ -243,7 +244,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 ### Checks
 
 - [ ] I can launch locally the application with `docker compose up`
-- [ ] I can see the UI in my brower at `http://<handleGithub>.training.dojo.padok.school/proxy/3000/`
+- [ ] I can see the UI in my browser at `http://<handleGithub>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally)
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -350,7 +351,7 @@ Take some time to [learn a bit about pods](https://kubernetes.io/docs/concepts/w
 ### How
 
 1. Write a `pod.yaml` file (the VSCode extension can help you with that)
-2. At minimum, you need a name and a first container definition, with its name and image. For the image, you can push the image to a public registry, or for *kind* add it to the cluster with `kind load docker-image "${IMAGE}" --name theodo-training`. You can also use the following: `ghcr.io/padok-team/dojo-guestbook:latest`.
+2. At minimum, you need a name and a first container definition, with its name and image. For the image, you can push the image to a public registry, or for _kind_ add it to the cluster with `kind load docker-image "${IMAGE}" --name theodo-training`. You can also use the following: `ghcr.io/padok-team/dojo-guestbook:latest`.
 3. Try to deploy it, and launch the previous command
 4. If you need to delete it, use `kubectl delete -f manifests/`
 5. Take some time to play around with this object: what happens if you give a non existing image?
@@ -418,6 +419,7 @@ spec:
           ports:
             - containerPort: 3000
 ```
+
 As for all kubernetes resources, here are generic useful commands:
 
 ```bash
@@ -510,7 +512,7 @@ Here is the [official documentation](https://kubernetes.io/docs/concepts/service
 kubectl get services
 kubectl describe service <my-svc>
 kubectl port forward svc/<my-svc> 3000:80
-# lets see on http://<handleGithub>.training.dojo.padok.school/proxy/3000/
+# lets see on http://<handleGithub>.training.dojo.padok.school/proxy/3000/ or http://localhost:3000
 ```
 
 ### How
@@ -569,7 +571,7 @@ Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-n
 ```bash
 kubectl get ingress
 kubectl describe ingress <my-ingress>
-# visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80/
+# visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80/ or http://guestbook.lvh.me
 ```
 
 ### How
