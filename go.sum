@@ -2,6 +2,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gomodule/redigo v1.9.2 h1:HrutZBLhSIU8abiSfW8pj8mPhOyMYjZT/wcA4/L9L9s=
 github.com/gomodule/redigo v1.9.2/go.mod h1:KsU3hiK/Ay8U42qpaJk+kuNa3C+spxapWpM+ywhcgtw=
+github.com/gomodule/redigo v1.9.3 h1:dNPSXeXv6HCq2jdyWfjgmhBdqnR6PRO3m/G05nvpPC8=
+github.com/gomodule/redigo v1.9.3/go.mod h1:KsU3hiK/Ay8U42qpaJk+kuNa3C+spxapWpM+ywhcgtw=
 github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
 github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
@@ -12,7 +14,11 @@ github.com/urfave/negroni/v3 v3.1.1 h1:6MS4nG9Jk/UuCACaUlNXCbiKa0ywF9LXz5dGu09v8
 github.com/urfave/negroni/v3 v3.1.1/go.mod h1:jWvnX03kcSjDBl/ShB0iHvx5uOs7mAzZXW+JvJ5XYAs=
 github.com/xyproto/pinterface v1.5.4 h1:u7bVqjJIlZ5+FDFrVfLmOgL38XGXt7R+xkLsfiSGDEQ=
 github.com/xyproto/pinterface v1.5.4/go.mod h1:X5B5pKE49ak7SpyDh5QvJvLH9cC9XuZNDcl5hEyYc34=
+github.com/xyproto/pinterface/v2 v2.1.2 h1:PhCqZpwknL0w0o1FNv9XsCk54ArgK7fogwvvBzLKw9c=
+github.com/xyproto/pinterface/v2 v2.1.2/go.mod h1:JEnbIgxF7qfkASFr8EXLhd2ymhd6xLG0Eq5xkFHqyXw=
 github.com/xyproto/simpleredis/v2 v2.8.1 h1:AUdTMtjX8XewUj2ouoH0z/T8Fqy59xr0FPv2/ZJlwbk=
 github.com/xyproto/simpleredis/v2 v2.8.1/go.mod h1:ErpU/OaAGxqW8/B65GmOBLoEsHyB++Wkpn+HqGnhkQE=
+github.com/xyproto/simpleredis/v2 v2.9.0 h1:63bwcxCZbxzaJjhnTvNO2NnF8rRe5JphmKLgxPLTuic=
+github.com/xyproto/simpleredis/v2 v2.9.0/go.mod h1:edDsEFCiPZHSaF0lDtfzQYvLV2jCwGB8r2uYxK0jvpM=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
 gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
