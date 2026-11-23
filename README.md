@@ -76,7 +76,7 @@ curl guestbook.lvh.me
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
 - [ ] I can run a docker container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
-- [ ] I can contact my cluster through ingress: https://\<username\>.training.dojo.padok.school/proxy/80/ (or http://guestbook.lvh.me) returns a 404
+- [ ] I can contact my cluster through the Gateway (Traefik): https://\<username\>.training.dojo.padok.school/proxy/80/ (or http://guestbook.lvh.me) returns a 404
 
 ## 1. (Optional) Build and launch the app locally
 
@@ -525,52 +525,59 @@ You can find the complete solution [here](solution/manifests/service.yaml). Don'
 
 </details>
 
-## 8. Show it to the world: Ingress
+## 8. Show it to the world: Gateway API
 
 ### Why
 
-Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, an **Ingress Controller** and its DNS are already setup for you, all traffic for `*.lvh.me` goes to your cluster
+Now that you have an internal load balancer, you want to expose your app to your friends. Thankfully, a **Gateway** powered by **Traefik** and its DNS are already setup for you, all traffic for `*.lvh.me` goes to your cluster
 
-However, you need to tell the Ingress Controller where to route the request it receives, depending on its _hostname_ or _path_. That is the job of the **Ingress**: it defines a route to the service you deployed before.
+However, you need to tell the Gateway where to route the requests it receives, depending on their _hostname_ or _path_. That is the job of the **HTTPRoute**: it attaches to the Gateway and defines a route to the service you deployed before. The Gateway API is the successor of the Ingress resource, and it is a standard that Traefik implements.
 
 ### What
 
-Create the manifest for an ingress and deploy it! The manifest looks like this
+Create the manifest for an HTTPRoute and deploy it! The manifest looks like this
 
 ```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
-  name: my-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: my-route
 spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: traefik
+  hostnames:
+    - www.theodo.com
   rules:
-    - host: www.padok.fr
-      http:
-        paths:
-          - path: /blog
-            pathType: Prefix
-            backend:
-              service:
-                name: my-service
-                port:
-                  number: 80
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /blog
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      backendRefs:
+        - name: my-service
+          port: 80
 ```
 
-Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-networking/ingress/) and commands:
+Here is the [usual documentation](https://gateway-api.sigs.k8s.io/guides/http-routing/) and commands:
 
 ```bash
-kubectl get ingress
-kubectl describe ingress <my-ingress>
+kubectl get httproutes
+kubectl describe httproute <my-route>
+kubectl get gateway -n traefik
 # visit https://\<username\>.training.dojo.padok.school/proxy/80/ or http://guestbook.lvh.me
 ```
 
 ### How
 
-1. Write a manifest and apply it. Choose a specific hostname for your app and your namespace if you share the cluster
+1. Write an HTTPRoute manifest and apply it. Choose a specific hostname for your app and your namespace if you share the cluster
 2. Try to access your app, do you have HTTPS?
-3. Try to deploy your app on a _subdomain_ or on a _subpath_ using the `nginx.ingress.kubernetes.io/rewrite-target: /` annotation and modifying the `path` and `host`.
+3. Try to deploy your app on a _subdomain_ or on a _subpath_ using the `URLRewrite` filter with `ReplacePrefixMatch` and modifying the `path` and `hostnames`.
 
 ### Checks
 
@@ -579,7 +586,7 @@ kubectl describe ingress <my-ingress>
 <details>
 <summary><em>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</em></summary>
 
-You can find the complete solution [here](solution/manifests/ingress.yaml). Don't spoil yourself too much!
+You can find the complete solution [here](solution/manifests/httproute.yaml). Don't spoil yourself too much!
 
 </details>
 
