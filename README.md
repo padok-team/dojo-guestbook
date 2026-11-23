@@ -26,8 +26,8 @@ _Alternatively, if you work on your local machine, you can install the following
 
 To connect **to the distant VM**:
 
-- Go to https://\<handleGithub\>.training.dojo.padok.school
-- The password is `<handleGithub>12345`
+- Go to https://\<username\>.training.dojo.padok.school
+- The password is `<username>12345`
 
 <details>
 <summary>💡 Tip N˚1</summary>
@@ -61,7 +61,7 @@ No resources found in default namespace.
 ```
 
 To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind. \
-You can visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80/ OR use the following command if you work on your local machine:
+You can visit https://\<username\>.training.dojo.padok.school/proxy/80/ OR use the following command if you work on your local machine:
 
 ```bash
 curl guestbook.lvh.me
@@ -82,7 +82,7 @@ curl guestbook.lvh.me
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
 - [ ] I can run a docker container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
-- [ ] I can contact my cluster through ingress: https://\<handleGithub\>.training.dojo.padok.school/proxy/80/ (or http://guestbook.lvh.me) returns a 404
+- [ ] I can contact my cluster through ingress: https://\<username\>.training.dojo.padok.school/proxy/80/ (or http://guestbook.lvh.me) returns a 404
 
 ## 1. (Optional) Build and launch the app locally
 
@@ -99,8 +99,6 @@ Be creative, try to modify a simple thing in the app.
 ### How
 
 For this you simply need the `go` cli installed and some knownledge of this language.
-
-Follow [official Go documentation](https://go.dev/doc/install) to install Go on your machine.
 
 When you are happy with the result, you can launch the app with `go run main.go`, or build a binary with `go build`.
 
@@ -119,7 +117,7 @@ Your app is running on the port 3000
 <details>
 <summary>🔍 Hint N˚2</summary>
 
-You can see it on https://\<handleGithub\>.training.dojo.padok.school/proxy/3000/ (or http://localhost:3000 if developing locally)
+You can see it on https://\<username\>.training.dojo.padok.school/proxy/3000/ (or http://localhost:3000 if developing locally)
 
 </details>
 
@@ -159,7 +157,7 @@ It serves some static files (stored in `/public`) for the UI. You will mainly ac
 
 ### How
 
-You can follow [this tutorial](https://docs.docker.com/language/golang/build-images/) to see how to build a golang image
+You can follow [this tutorial](https://hub.docker.com/_/golang#how-to-use-this-image) to see how to build a golang image
 
 1. Write a `Dockerfile`. You need to start from a _base image_, ideally with golang already installed.
 2. Define a working directory.
@@ -182,11 +180,11 @@ You can follow [this tutorial](https://docs.docker.com/language/golang/build-ima
    ```
 
 9. Check that the microservice responds to requests on
-   `http://<handleGithub>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally). You should see the following UI:
+   `http://<username>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally). You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
-10. **Optional**: Implement some best practices, such as "multi-stage builds". It helps reduce the size of your images and increase security.
+10. **Optional**: Implement some best practices, such as [multi-stage builds](https://docs.docker.com/build/building/multi-stage/). It helps reduce the size of your images and increase security.
 
     The image you built so far is pretty large because it contains the entire Go
     toolkit. It's time to make it smaller. Much smaller. Here is what you need to
@@ -244,7 +242,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 ### Checks
 
 - [ ] I can launch locally the application with `docker compose up`
-- [ ] I can see the UI in my browser at `http://<handleGithub>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally)
+- [ ] I can see the UI in my browser at `http://<username>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally)
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -279,7 +277,7 @@ We simply need to add a new service in our docker-compose file, and have a way f
 
 ### How
 
-1. Add a `redis` service in your app. Don't build redis locally, but use the public `redis:7` image.
+1. Add a `redis` service in your app. Don't build redis locally, but use the public `mirror.gcr.io/redis:8` image.
 2. Expose its redis port `6379`.
 3. Make the guestbook app use it:
 
@@ -512,7 +510,7 @@ Here is the [official documentation](https://kubernetes.io/docs/concepts/service
 kubectl get services
 kubectl describe service <my-svc>
 kubectl port forward svc/<my-svc> 3000:80
-# lets see on http://<handleGithub>.training.dojo.padok.school/proxy/3000/ or http://localhost:3000
+# lets see on http://<username>.training.dojo.padok.school/proxy/3000/ or http://localhost:3000
 ```
 
 ### How
@@ -571,7 +569,7 @@ Here is the [usual documentation](https://kubernetes.io/docs/concepts/services-n
 ```bash
 kubectl get ingress
 kubectl describe ingress <my-ingress>
-# visit https://\<handleGithub\>.training.dojo.padok.school/proxy/80/ or http://guestbook.lvh.me
+# visit https://\<username\>.training.dojo.padok.school/proxy/80/ or http://guestbook.lvh.me
 ```
 
 ### How
@@ -670,7 +668,7 @@ We want to fix our app and give it some persistent storage. However, Redis is a 
 
 The [Helm documentation](https://helm.sh/docs/intro/quickstart/) is quite good, but unless you have time, don't lose too much time on it.
 
-We will only need one command, which installs or upgrades a _release_ (ie a deployment package). We will use the _redis_ chart from the _bitnami_ repository, identified by its URL. Lastly, we will set one specific option, using a `values.yaml` file.
+We will only need one command, which installs or upgrades a _release_ (ie a deployment package). We will use the _redis_ chart from the _CloudPirates_ repository, identified by its URL. Lastly, we will set one specific option, using a `values.yaml` file.
 
 ```bash
 helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of-values-file>
@@ -679,11 +677,11 @@ helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of
 ### How
 
 1. We will use the _CloudPirates_ Redis chart, you can find its [source code here](https://github.com/CloudPirates-io/helm-charts/tree/main/charts/redis).
-2. Create your `values.yaml` file. You only need to set `architecture: standalone`, `replicaCount: 1`, and disable the authentication, but you can explore other options in the `values.yaml` of the repository.
+2. Create your `values.yaml` file. You will need to set `architecture: standalone`, `replicaCount: 1`, set the image registry to `mirror.gcr.io` (to avoid rate limiting) and disable the authentication, but you can explore other options in the `values.yaml` of the repository.
 3. Deploy your release with the `helm` command:
    - You can name your release as you want, but if you name it the same name as the chart, the name of the resources will be shorter.
    - The chart you want to use is called redis
-   - The Helm repository URL is `oci://registry-1.docker.io/cloudpirates/redis`
+   - The Helm repository URL is `oci://mirror.gcr.io/cloudpirates/redis`
    - Don't forget to set your values file
 4. Explore what has been created: pods, deployments (why is there none ?), services, etc...
 
@@ -698,10 +696,11 @@ helm upgrade --install <release-name> <chart-name> --repo <repo-url> -f <path-of
 Simple run:
 
 ```bash
-helm upgrade --install redis oci://registry-1.docker.io/cloudpirates/redis \
+helm upgrade --install redis oci://mirror.gcr.io/cloudpirates/redis \
   --set architecture=standalone \
   --set auth.enabled=false \
-  --set replicaCount=1
+  --set replicaCount=1 \
+  --set image.registry=mirror.gcr.io
 ```
 
 You can see the complete solution [here](solution/helm/)

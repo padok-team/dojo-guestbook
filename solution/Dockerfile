@@ -1,4 +1,4 @@
-FROM golang:1.25-alpine AS build
+FROM public.ecr.aws/docker/library/golang:1.26-alpine AS build
 
 WORKDIR /app
 

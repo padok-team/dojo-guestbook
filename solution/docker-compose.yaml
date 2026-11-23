@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   guestbook:
     build:
@@ -13,7 +11,7 @@ services:
       - redis
 
   redis:
-    image: redis:8
+    image: mirror.gcr.io/redis:8
     ports:
       - 6379:6379
     volumes:

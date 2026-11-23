@@ -1,3 +1,6 @@
+image:
+  registry: mirror.gcr.io
+
 architecture: standalone
 replicaCount: 1
 
