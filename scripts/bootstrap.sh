@@ -23,14 +23,24 @@ else
     kind create cluster --name=$CLUSTER_NAME --config=../kind-cluster.yaml
 fi
 
-# Install the NGINX ingress controller.
+# Install Traefik and Gateway API CRDs
 _info "📥 Installing an ingress controller..."
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-kubectl rollout status deployment --namespace=ingress-nginx ingress-nginx-controller
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.0/standard-install.yaml
+helm repo add traefik https://traefik.github.io/charts --force-update
+helm upgrade --install traefik traefik/traefik \
+  --namespace traefik \
+  --create-namespace \
+  --set service.spec.type=NodePort \
+  --set ports.web.nodePort=30080 \
+  --set ports.websecure.nodePort=30443 \
+  --set providers.kubernetesGateway.enabled=true \
+  --set gateway.listeners.web.namespacePolicy.from=All \
+  --set image.registry=mirror.gcr.io \
+  --wait
 
 # Install metrics server
 _info "📥 Installing metric server..."
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.0/components.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 kubectl patch -n kube-system deployment metrics-server --type=json \
   -p '[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'
 

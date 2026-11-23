@@ -40,7 +40,7 @@ Once in VSCode to see this document in a more human friendly way press `crtl+shi
 
 We have a script ready for you, it uses the `kind-cluster.yaml` config in this repo for the cluster configuration. If you need more nodes, you'll need to modify it.
 
-It also installs an _Ingress Controller_, which acts as a reverse proxy for your cluster.
+It also installs an Gateway Controller, which acts as a reverse proxy for your cluster.
 
 ```bash
 cd dojo-guestbook
@@ -60,19 +60,13 @@ $ kubectl get pods
 No resources found in default namespace.
 ```
 
-To test that your cluster is working, you can query the _Nginx Ingress Controller_, which should respond with a 404 since no app is declared behind. \
+To test that your cluster is working, you can query the *Traefik Gateway Controller*, which should respond with a 404 since no app is declared behind. \
 You can visit https://\<username\>.training.dojo.padok.school/proxy/80/ OR use the following command if you work on your local machine:
 
 ```bash
 curl guestbook.lvh.me
 
-<html>
-<head><title>404 Not Found</title></head>
-<body>
-<center><h1>404 Not Found</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>
+404 page not found
 ```
 
 **Note:** `*.lvh.me` is a special domain that resolves always to `127.0.0.1`, so it works perfectly for local development.
