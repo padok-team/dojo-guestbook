@@ -26,7 +26,7 @@ _Alternatively, if you work on your local machine, you can install the following
 
 To connect **to the distant VM**:
 
-- Go to https://\<username\>.training.dojo.padok.school
+- Go to https://\<username\>.training.dojo.theodo.cloud
 - The password is `<username>12345`
 
 <details>
@@ -61,7 +61,7 @@ No resources found in default namespace.
 ```
 
 To test that your cluster is working, you can query the *Traefik Gateway Controller*, which should respond with a 404 since no app is declared behind. \
-You can visit https://\<username\>.training.dojo.padok.school/proxy/80/ OR use the following command if you work on your local machine:
+You can visit https://\<username\>.training.dojo.theodo.cloud/proxy/80/ OR use the following command if you work on your local machine:
 
 ```bash
 curl guestbook.lvh.me
@@ -76,7 +76,7 @@ curl guestbook.lvh.me
 - [ ] I can run a simple command with all the tool listed above (`git --version`, `kubectl --help`, etc...)
 - [ ] I can run a docker container: `docker run hello-world`
 - [ ] I can run a simple `kubectl` query: `kubectl get nodes`
-- [ ] I can contact my cluster through the Gateway (Traefik): https://\<username\>.training.dojo.padok.school/proxy/80/ (or http://guestbook.lvh.me) returns a 404
+- [ ] I can contact my cluster through the Gateway (Traefik): https://\<username\>.training.dojo.theodo.cloud/proxy/80/ (or http://guestbook.lvh.me) returns a 404
 
 ## 1. (Optional) Build and launch the app locally
 
@@ -111,7 +111,7 @@ Your app is running on the port 3000
 <details>
 <summary>🔍 Hint N˚2</summary>
 
-You can see it on https://\<username\>.training.dojo.padok.school/proxy/3000/ (or http://localhost:3000 if developing locally)
+You can see it on https://\<username\>.training.dojo.theodo.cloud/proxy/3000/ (or http://localhost:3000 if developing locally)
 
 </details>
 
@@ -174,7 +174,7 @@ You can follow [this tutorial](https://hub.docker.com/_/golang#how-to-use-this-i
    ```
 
 9. Check that the microservice responds to requests on
-   `http://<username>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally). You should see the following UI:
+   `http://<username>.training.dojo.theodo.cloud/proxy/3000/` (or http://localhost:3000 if developing locally). You should see the following UI:
 
    ![Local guestbook no DB](./.assets/local-guestbook-no-db.png)
 
@@ -236,7 +236,7 @@ There is a [_get started_](https://docs.docker.com/compose/gettingstarted/) arti
 ### Checks
 
 - [ ] I can launch locally the application with `docker compose up`
-- [ ] I can see the UI in my browser at `http://<username>.training.dojo.padok.school/proxy/3000/` (or http://localhost:3000 if developing locally)
+- [ ] I can see the UI in my browser at `http://<username>.training.dojo.theodo.cloud/proxy/3000/` (or http://localhost:3000 if developing locally)
 
 <details>
 <summary>Compare your work to the solution before moving on. Are there differences? Is your approach better or worse? Why?</summary>
@@ -504,7 +504,7 @@ Here is the [official documentation](https://kubernetes.io/docs/concepts/service
 kubectl get services
 kubectl describe service <my-svc>
 kubectl port forward svc/<my-svc> 3000:80
-# lets see on http://<username>.training.dojo.padok.school/proxy/3000/ or http://localhost:3000
+# lets see on http://<username>.training.dojo.theodo.cloud/proxy/3000/ or http://localhost:3000
 ```
 
 ### How
@@ -570,7 +570,7 @@ Here is the [usual documentation](https://gateway-api.sigs.k8s.io/guides/http-ro
 kubectl get httproutes
 kubectl describe httproute <my-route>
 kubectl get gateway -n traefik
-# visit https://\<username\>.training.dojo.padok.school/proxy/80/ or http://guestbook.lvh.me
+# visit https://\<username\>.training.dojo.theodo.cloud/proxy/80/ or http://guestbook.lvh.me
 ```
 
 ### How
