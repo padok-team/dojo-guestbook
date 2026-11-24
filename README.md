@@ -776,6 +776,6 @@ Help us make a better dojo next time by **submitting your feedback here**: https
 
 ## LICENSE
 
-© 2025 [Theodo Cloud](https://cloud.theodo.com/).
+© 2026 [Theodo Cloud](https://cloud.theodo.com/).
 
 Licensed under the [Apache License](https://www.apache.org/licenses/LICENSE-2.0), Version 2.0 ([LICENSE](./LICENSE))
